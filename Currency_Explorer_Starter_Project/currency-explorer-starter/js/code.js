@@ -19,10 +19,18 @@ btnIntercambiar.addEventListener("click", intercambiarMonedas);
 
 // 3. FUNCIÓN PRINCIPAL
 async function convertirMoneda() {
+  const textoCantidad = cantidad.value.trim();
+  
   // Misiones guiadas 1-3: ya existe un flujo mínimo funcional EUR -> USD.
   // A partir de la Misión 4 debes convertirlo en una solución dinámica.
 
   const valor = Number(cantidad.value);
+  
+  const mensajeError = ValidarEntrada(textoCantidad, valor);
+  if (mensajeError) {
+    mostrarError(mensajeError);
+    return;
+  }
 
   // TODO · MISIÓN 07: sustituir esta validación mínima por una validación completa.
   if (!Number.isFinite(valor) || valor <= 0) {
@@ -77,7 +85,14 @@ function mostrarError(mensaje) {
   resultadoTexto.textContent = mensaje;
   detalleTasa.textContent = "Revisa los datos e inténtalo nuevamente.";
 }
-
+// MISIÓN 07: implementar ValidarEntrada() para comprobar que la cantidad es un número válido y que las monedas son diferentes.
+function ValidarEntrada(texto,valor) {
+  if (texto === "") return "escribe una cantidad ";
+  if (!Number.isFinite(valor)) return "la cantidad no es un número válido";
+  if (valor <= 0) return "la cantidad debe ser mayor que cero";
+  if (origen.value === destino.value) return "Elige dos monedas diferentes";
+  return null;
+}
 // PISTA PARA EL RETO:
 // origen.value        -> moneda seleccionada como origen
 // destino.value       -> moneda seleccionada como destino
