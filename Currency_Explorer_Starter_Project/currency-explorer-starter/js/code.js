@@ -46,8 +46,8 @@ async function convertirMoneda() {
     const conversion = valor * datos.rate;
 
     resultado.classList.remove("error");
-    resultadoTexto.textContent = `${valor.toFixed(2)} ${monedaOrigen} = ${conversion.toFixed(2)} ${monedaDestino}`;
-    detalleTasa.textContent = `1 ${monedaOrigen} = ${datos.rate} ${monedaDestino} · ${datos.date}`;
+    resultadoTexto.textContent = `${formatearNumero(valor)} ${monedaOrigen} = ${formatearNumero(conversion)} ${monedaDestino}`;
+    detalleTasa.textContent = `1 ${monedaOrigen} = ${datos.rate} ${monedaDestino} · Actualizado: ${datos.date}`;
 
   } catch (error) {
     // TODO · MISIÓN 09: mejora el mensaje y analiza qué errores pueden llegar aquí.
@@ -65,6 +65,13 @@ function intercambiarMonedas() {
 }
 
 // 4. UTILIDADES DE INTERFAZ
+// TODO · MISIÓN 05: implementar formatearNumero() para mostrar el resultado con separadores de miles y dos decimales.
+function formatearNumero(numero) {
+  return new Intl.NumberFormat("es-MX", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(numero);
+}
 function mostrarError(mensaje) {
   resultado.classList.add("error");
   resultadoTexto.textContent = mensaje;
