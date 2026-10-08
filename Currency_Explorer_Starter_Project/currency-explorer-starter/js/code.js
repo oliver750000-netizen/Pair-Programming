@@ -55,13 +55,13 @@ async function convertirMoneda() {
     console.error(error);
   }
 }
+// MISIÓN 06: implementar la función intercambiarMonedas() para que invierta los valores de los <select> y vuelva a calcular la conversión.
 
 function intercambiarMonedas() {
-  // TODO · MISIÓN 06:
-  // 1) guardar temporalmente el valor de origen
-  // 2) intercambiar origen.value y destino.value
-  // 3) volver a calcular
-  mostrarError("Misión 06 pendiente: implementa el intercambio de monedas.");
+  const temporal = origen.value;
+  origen.value = destino.value;
+  destino.value = temporal;
+  convertirMoneda(); 
 }
 
 // 4. UTILIDADES DE INTERFAZ
