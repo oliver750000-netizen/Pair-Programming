@@ -129,10 +129,68 @@ function ValidarEntrada(texto,valor) {
   if (origen.value === destino.value) return "Elige dos monedas diferentes";
   return null;
 }
-// PISTA PARA EL RETO:
-// origen.value        -> moneda seleccionada como origen
-// destino.value       -> moneda seleccionada como destino
-// cantidad.value      -> texto escrito en el input
-// Number(...)         -> convierte texto a número
-// response.ok         -> indica si la respuesta HTTP fue satisfactoria
-// resultado.textContent -> permite modificar texto del DOM
+
+
+// 5. HISTÓRICO (Misión 11)
+const btnHistorico = document.querySelector("#historico");
+const grafica = document.querySelector("#grafica");
+btnHistorico.addEventListener("click", cargarHistorico);
+
+async function cargarHistorico() {
+  const url = `https://api.frankfurter.dev/v2/rates?base=${origen.value}&quotes=${destino.value}&from=2026-01-01&group=month`;
+
+  try {
+    btnHistorico.disabled = true;
+    btnHistorico.textContent = "Cargando histórico…";
+
+    const respuesta = await fetch(url);
+    if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+
+    const datos = await respuesta.json();
+    console.log(datos); // verificar la estructura aquí
+
+    if (!Array.isArray(datos) || datos.length === 0) {
+      throw new Error("La API no devolvió datos históricos.");
+    }
+
+    const fechas = datos.map(item => item.date);
+    const tasas = datos.map(item => item.rate);
+
+    dibujarGrafica(fechas, tasas);
+
+  } catch (error) {
+    console.error(error);
+    grafica.textContent = "No se pudo cargar el histórico.";
+  } finally {
+    btnHistorico.disabled = false;
+    btnHistorico.textContent = "Ver histórico (desde enero)";
+  }
+}
+
+function dibujarGrafica(fechas, tasas) {
+  const W = 600, H = 260, P = 40;
+  const min = Math.min(...tasas);
+  const max = Math.max(...tasas);
+  const rango = max - min || 1;
+
+  const x = i => P + (i * (W - 2 * P)) / Math.max(tasas.length - 1, 1);
+  const y = t => H - P - ((t - min) / rango) * (H - 2 * P);
+
+  const puntos = tasas.map((t, i) => `${x(i)},${y(t)}`).join(" ");
+
+  const marcas = tasas.map((t, i) => `
+    <circle cx="${x(i)}" cy="${y(t)}" r="4" fill="#16758b"/>
+    <text x="${x(i)}" y="${H - 12}" font-size="10" text-anchor="middle">
+      ${fechas[i].slice(0, 7)}
+    </text>
+  `).join("");
+
+  grafica.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;margin-top:16px;background:#f8fafc;border-radius:12px">
+      <polyline points="${puntos}" fill="none" stroke="#16758b" stroke-width="2"/>
+      ${marcas}
+      <text x="${P}" y="16" font-size="11" fill="#334155">
+        ${origen.value}→${destino.value}: ${min.toFixed(4)} – ${max.toFixed(4)}
+      </text>
+    </svg>`;
+}
