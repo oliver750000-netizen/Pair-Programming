@@ -46,6 +46,7 @@ async function convertirMoneda() {
 
   try {
     // TODO · MISIÓN 08: activar un estado visual de carga antes de consultar.
+    estadoCarga(true);    
     const respuesta = await fetch(url);
 
     // TODO · MISIÓN 09: comprobar response.ok y lanzar un error si corresponde.
@@ -58,10 +59,14 @@ async function convertirMoneda() {
     detalleTasa.textContent = `1 ${monedaOrigen} = ${datos.rate} ${monedaDestino} · Actualizado: ${datos.date}`;
 
   } catch (error) {
+    
     // TODO · MISIÓN 09: mejora el mensaje y analiza qué errores pueden llegar aquí.
     mostrarError("No fue posible completar la consulta.");
     console.error(error);
+    } finally {                             
+    estadoCarga(false);
   }
+  
 }
 // MISIÓN 06: implementar la función intercambiarMonedas() para que invierta los valores de los <select> y vuelva a calcular la conversión.
 
@@ -85,6 +90,20 @@ function mostrarError(mensaje) {
   resultadoTexto.textContent = mensaje;
   detalleTasa.textContent = "Revisa los datos e inténtalo nuevamente.";
 }
+
+function estadoCarga(cargando) {
+  btnConvertir.disabled = cargando;
+  btnIntercambiar.disabled = cargando;
+  btnConvertir.textContent = cargando ? "Consultando..." : "Convertir";
+
+  if (cargando) {
+    resultado.classList.remove("error");
+    resultadoTexto.textContent = "Consultando...";
+    detalleTasa.textContent = "Esperando respuesta de la API.";
+  }
+}
+
+
 // MISIÓN 07: implementar ValidarEntrada() para comprobar que la cantidad es un número válido y que las monedas son diferentes.
 function ValidarEntrada(texto,valor) {
   if (texto === "") return "escribe una cantidad ";
