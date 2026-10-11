@@ -17,3 +17,38 @@ input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(22,1
 .result{margin-top:22px;padding:22px;border-radius:14px;background:var(--soft);border-left:5px solid var(--teal);display:grid;gap:6px}.result-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--teal)}.result strong{font-size:1.35rem}.result small{color:var(--muted)}
 .result.error{background:var(--warn);border-left-color:#b56b13}.footer-note{text-align:center;padding:0 20px 22px;color:var(--muted);font-size:.78rem}
 @media(max-width:600px){.hero,.panel{padding-left:22px;padding-right:22px}.currency-grid{grid-template-columns:1fr 46px 1fr;gap:8px}.swap{height:44px}.field label{font-size:.72rem}}
+
+/* Estado de carga */
+.result.loading { opacity: .75; }
+.result.loading strong::after {
+  content: "";
+  display: inline-block;
+  width: 14px; height: 14px;
+  margin-left: 10px;
+  border: 2px solid var(--teal);
+  border-top-color: transparent;
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: girar .8s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Botón de intercambio */
+.swap { transition: transform .25s, background .2s; }
+.swap:active { transform: rotate(180deg); }
+.swap:disabled { opacity: .5; cursor: wait; }
+
+/* Foco visible para teclado */
+button:focus-visible { outline: 3px solid rgba(22,117,139,.4); outline-offset: 2px; }
+
+/* Pantallas muy pequeñas: selectores apilados */
+@media (max-width: 420px) {
+  .currency-grid { grid-template-columns: 1fr; gap: 10px; }
+  .swap { width: 100%; height: 42px; border-radius: 11px; }
+  .result strong { font-size: 1.15rem; }
+}
+
+/* Respeta usuarios con movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
