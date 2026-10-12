@@ -5,15 +5,18 @@
 - Estudiante B: Oliver Vasquez Santiago
 
 ## Pair Programming
+## Pair Programming
 | Misión | Driver | Navigator | Commit / evidencia |
-|---|---|---|---|
-| 04 | Laura | Oliver | `hash` |
-| 05 | Oliver | Laura | `hash` |
-| 06 | Laura | Oliver | `hash` |
-| 07 | Oliver | Laura | `hash` |
-| 08 | Laura | Oliver | `hash` |
-| 09 | Oliver | Laura | `hash` |
-| 10 | Laura | Oliver | `hash` |
+|---------|-------|-------|---|
+| Starter | Laura | Oliver | `Starter project: estructura inicial - Laura y Oliver` |
+| 04      | Laura | Oliver | `Misión 04: monedas dinámicas desde los selectores - Driver: Laura / Navigator: Oliver` |
+| 05      | Oliver | Laura | `Misión 05: conversión completa con formato legible - Driver: Oliver / Navigator: Laura` |
+| 06      | Laura | Oliver | `Misión 06: intercambio de monedas y recálculo - Driver: Laura / Navigator: Oliver` |
+| 07      | Oliver | Laura | `Misión 07: validación completa de cantidad y monedas - Driver: Oliver / Navigator: Laura` |
+| 08      | Laura | Oliver | `Misión 08: estado de carga y botones deshabilitados - Driver: Laura / Navigator: Oliver` |
+| 09  | Oliver | Laura | `Misión 09: manejo de errores con response.ok y try/catch - Driver: Oliver / Navigator: Laura` |
+| 10    | Laura | Oliver | `Misión 10: diseño responsive, spinner y foco accesible - Driver: Laura / Navigator: Oliver` |
+| 11    | Oliver | Laura | `Misión 11: histórico mensual con gráfica SVG - Driver: Oliver / Navigator: Laura` |
 
 ## Objetivo
 Completar una aplicación frontend que consuma Frankfurter API para convertir divisas y demostrar comprensión de eventos, DOM, `fetch()`, JSON, asincronía, validación y manejo de errores.
